@@ -6,7 +6,9 @@ const HeroSearch = ({ movieName, setMovieName }) => {
       {/* Zone de Titre */}
       <section className="hero-section">
         <h1 className="hero-title">PopcornTime</h1>
-        <p className="hero-subtitle">Découvrez notre sélection exclusive de films</p>
+        <p className="hero-subtitle">
+          Découvrez notre sélection exclusive de films
+        </p>
       </section>
 
       {/* Barre de recherche */}
