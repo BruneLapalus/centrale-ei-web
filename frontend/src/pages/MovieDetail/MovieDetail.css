@@ -1,0 +1,56 @@
+.movie-detail-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* Fond blanc transparent pour voir les pop-corns derrière */
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+  color: #0f172a;
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #1d4ed8;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.movie-detail-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.detail-poster img {
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  max-width: 100%;
+  height: auto;
+}
+
+.detail-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.detail-info h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.tagline {
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.overview {
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
