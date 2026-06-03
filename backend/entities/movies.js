@@ -1,6 +1,6 @@
 import typeorm from 'typeorm';
 
-const User = new typeorm.EntitySchema({
+const Movie = new typeorm.EntitySchema({
   name: 'Movie',
   columns: {
     id: {
@@ -8,12 +8,25 @@ const User = new typeorm.EntitySchema({
       type: Number,
       generated: true,
     },
+    tmdbId: {
+      // <-- Corrigé ici (fini le "tmormId")
+      type: Number,
+      unique: true,
+      nullable: true,
+    },
     title: {
       type: String,
       unique: true,
     },
-    rating: { type: Number },
+    rating: {
+      type: Number,
+      nullable: true,
+    },
+    isLiked: {
+      type: Boolean,
+      default: true,
+    },
   },
 });
 
-export default User;
+export default Movie;
