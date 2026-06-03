@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useFetchMovies() {
   const [movies, setMovies] = useState([]);
@@ -18,10 +18,12 @@ export function useFetchMovies() {
       },
     })
       .then((response) => {
+        // 1. On vérifie si la réponse est OK
         if (!response.ok) {
-          // eslint-disable-next-line prettier/prettier
-          {throw new Error(`Erreur HTTP ! Statut : ${response.status}`);}
+          throw new Error(`Erreur HTTP ! Statut : ${response.status}`);
+        }
 
+        // 2. Si c'est OK, on retourne le JSON (ce qui manquait ou était bloqué)
         return response.json();
       })
       .then((data) => {
