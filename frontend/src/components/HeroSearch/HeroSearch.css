@@ -13,17 +13,16 @@
 
 .hero-title {
   font-family: 'Playfair Display', serif;
-  font-size: 3rem;
+  font-size: 5rem;
   color: #1e3a8a; /* Passé en blanc */
   margin-bottom: 10px;
   
   /* --- AJOUT DE L'OMBRE --- */
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
-}
+  text-shadow: 2px 2px 8px rgba(96, 106, 243, 0.8), 0 0 10px rgba(96, 106, 243, 0.8)
 
 .hero-subtitle {
   font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
+  font-size: 3rem;
   color: #ffffff; /* Passé en blanc */
   
   /* --- AJOUT DE L'OMBRE --- */
@@ -42,7 +41,7 @@
   border: 1px solid #cbd5e1;
   font-family: 'Inter', sans-serif;
   outline: none;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(96, 106, 243, 0.8);
   transition: border-color 0.2s;
 }
 
