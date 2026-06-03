@@ -14,14 +14,20 @@
 .hero-title {
   font-family: 'Playfair Display', serif;
   font-size: 3rem;
-  color: #0f172a;
+  color: #1e3a8a; /* Passé en blanc */
   margin-bottom: 10px;
+  
+  /* --- AJOUT DE L'OMBRE --- */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 1.2rem;
-  color: #6b7280;
+  color: #ffffff; /* Passé en blanc */
+  
+  /* --- AJOUT DE L'OMBRE --- */
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9);
 }
 
 .search-bar-wrapper {

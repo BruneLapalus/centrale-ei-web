@@ -1,52 +1,44 @@
 import { useState } from 'react';
 import { useFetchMovies } from '../../components/CustomHook.jsx';
-import MoviesList from '../../components/MoviesList';
+import MoviesList from '../../components/MoviesList/movieslist';
+import HeroSearch from '../../components/HeroSearch/HeroSearch'; // On importe notre nouveau composant
 import './Home.css';
 
 function Home() {
   const [movieName, setMovieName] = useState('');
-
-  // On appelle la fonction ici
   const { movies, apiError } = useFetchMovies();
+
+  // Filtrage des films
+  const filteredMovies = movies
+    ? movies.filter((movie) =>
+        movie.title.toLowerCase().includes(movieName.toLowerCase())
+      )
+    : [];
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>PopcornTime</h1>
-        <p>Découvrez notre sélection exclusive de films</p>
-      </header>
-      <main className="App-content">
-        <div className="search-container" style={{ margin: '20px 0' }}>
-          <input
-            type="text"
-            placeholder="Entrez le nom d'un film..."
-            value={movieName}
-            onChange={(e) => setMovieName(e.target.value)}
-            style={{ padding: '8px', fontSize: '16px', width: '250px' }}
-          />
-        </div>
+      {/* 1. Notre composant épuré à qui on passe l'état de recherche */}
+      <HeroSearch movieName={movieName} setMovieName={setMovieName} />
 
-        <p style={{ fontWeight: 'bold', margin: '15px 0' }}>
-          Film recherché : {movieName}
-        </p>
-
+      <main
+        className="App-content"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '0 20px',
+        }}
+      >
+        {/* 2. Message d'erreur API */}
         {apiError && (
-          <div
-            style={{
-              color: 'red',
-              backgroundColor: '#ffffff',
-              padding: '10px',
-              borderRadius: '5px',
-              margin: '20px auto',
-              maxWidth: '500px',
-            }}
-          >
+          <div className="api-error-message">
             <strong>Attention :</strong> Impossible de charger les films (
             {apiError})
           </div>
         )}
 
-        <MoviesList movies={movies} apiError={apiError} />
+        {/* 3. Liste des films */}
+        <MoviesList movies={filteredMovies} apiError={apiError} />
       </main>
     </div>
   );

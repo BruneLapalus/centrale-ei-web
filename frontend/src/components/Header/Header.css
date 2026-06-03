@@ -1,16 +1,64 @@
-.Header-container {
+/* Import de la police Inter (comme sur Canva) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.header-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 5px;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e3a8a; /* Un beau bleu moderne (équivalent Bleu Tailwind) */
+  padding: 1rem 2rem;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.Header-container > :not(:last-child) {
-  margin-right: 10px;
+
+/* Conteneur des liens */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.Link {
+/* Style des liens */
+.header-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: opacity 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+/* Effet au survol des liens */
+.header-link:hover {
+  opacity: 0.8;
+}
+
+/* Gestion des séparateurs "|" en CSS (sauf après le dernier élément) */
+.header-link:not(:last-child)::after {
+  content: "|";
+  margin-left: 1rem;
+  color: rgba(255, 255, 255, 0.4); /* Blanc semi-transparent pour plus de subtilité */
+  pointer-events: none; /* Évite que le "|" soit cliquable */
+}
+/* Modifie la règle existante .header-logo a pour l'alignement */
+.header-logo a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  letter-spacing: -0.05em;
+  
+  /* Ajoute ces lignes pour aligner le logo et le texte côte à côte */
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espace entre le logo et le texte */
+}
+
+/* Ajoute cette nouvelle règle pour contrôler la taille de ton logo */
+.logo-img {
+  height: 40px;      /* Ajuste la hauteur selon tes besoins */
+  width: auto;       /* Conserve les proportions de l'image */
+  object-fit: contain;
 }

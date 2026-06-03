@@ -1,11 +1,27 @@
+/* Import de la police élégante pour les titres du site */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@400;500;700&display=swap');
+
 .Layout-container {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  color: white;
-}
 
+  /* --- AJOUT DE L'IMAGE DE FOND --- */
+  background-image: url('/mon_fond.png'); /* Chemin vers votre image dans le dossier public */
+  background-attachment: fixed; /* Rend le fond totalement IMMOBILE au scroll */
+  background-size: cover; /* L'image s'adapte pour couvrir tout l'écran */
+  background-position: center; /* Centre l'image horizontalement et verticalement */
+  background-repeat: no-repeat; /* Empêche l'image de se répéter en mosaïque */
+
+  /* Une couleur alternative de secours le temps que l'image charge */
+  background-color: #fcfaf6;
+
+  /* Une couleur de texte sombre par défaut */
+  color: #1f2937;
+  font-family: 'Inter', sans-serif;
+}
 .Layout-content {
-  padding: 20px;
+  /* Supprime ou ajuste le padding selon tes préférences pour le contenu */
+  padding: 40px 20px;
+  flex: 1; /* Permet au contenu de prendre tout l'espace restant */
 }
