@@ -36,7 +36,6 @@ function Home() {
             {apiError})
           </div>
         )}
-
         {/* 3. Liste des films */}
         <MoviesList movies={filteredMovies} apiError={apiError} />
       </main>

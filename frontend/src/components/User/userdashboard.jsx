@@ -1,4 +1,5 @@
-import './User.css';
+import './user.css';
+import MovieCard from '../MovieCard/moviecard';
 
 function UserDashboard({ user, onLogout }) {
   return (
@@ -7,23 +8,22 @@ function UserDashboard({ user, onLogout }) {
 
       <p>Bienvenue {user.firstname} !</p>
 
-      <div className="user-info">
-        <p>
-          <strong>Email :</strong> {user.email}
-        </p>
-
-        <p>
-          <strong>Prénom :</strong> {user.firstname}
-        </p>
-
-        <p>
-          <strong>Nom :</strong> {user.lastname}
-        </p>
-      </div>
-
       <button type="button" onClick={onLogout}>
         Se déconnecter
       </button>
+      {user.watchlist && user.watchlist.length > 0 ? (
+        <section className="user-watchlist">
+          <h2>Ma watchlist</h2>
+
+          <div className="movies-list">
+            {user.watchlist.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </div>
+        </section>
+      ) : (
+        <p>Votre watchlist est vide pour le moment.</p>
+      )}
     </main>
   );
 }

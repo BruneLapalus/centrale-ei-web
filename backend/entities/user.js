@@ -15,6 +15,18 @@ const User = new typeorm.EntitySchema({
     firstname: { type: String },
     lastname: { type: String },
     password: { type: String },
+    likedMovies: {
+      type: 'simple-json',
+      nullable: true,
+    },
+    dislikedMovies: {
+      type: 'simple-json',
+      nullable: true,
+    },
+    watchlist: {
+      type: 'simple-json',
+      nullable: true,
+    },
   },
 });
 

@@ -1,11 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './MovieDetail.css';
+import axios from 'axios';
 
 function MovieDetail() {
   const { id } = useParams(); // Récupère l'ID du film depuis l'URL
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [apiError, setApiError] = useState(null);
+
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedUser = localStorage.getItem('currentUser');
+
+    if (!savedUser) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(savedUser);
+    } catch (error) {
+      localStorage.removeItem('currentUser');
+
+      return null;
+    }
+  });
+
+  const movieId = Number(id);
+  const isInWatchlist = currentUser?.watchlist?.some(
+    (watchlistMovie) => Number(watchlistMovie.id) === Number(movie?.id)
+  );
+
+  const isLiked = currentUser?.likedMovies?.includes(movieId);
+  const isDisliked = currentUser?.dislikedMovies?.includes(movieId);
+
+  const handlePreference = (preference) => {
+    if (!currentUser) {
+      return;
+    }
+
+    axios
+      .post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/${
+          currentUser.id
+        }/movie-preference`,
+        {
+          movieId: movieId,
+          preference: preference,
+        }
+      )
+      .then((response) => {
+        const updatedUser = response.data.user;
+
+        setCurrentUser(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      })
+      .catch((error) => {
+        console.error('Erreur lors du like/dislike :', error);
+      });
+  };
 
   useEffect(() => {
     const TMDB_TOKEN =
@@ -46,6 +98,35 @@ function MovieDetail() {
     return <p className="error-text">Film introuvable.</p>;
   }
 
+  const handleWatchlist = () => {
+    if (!currentUser || !movie) {
+      return;
+    }
+
+    axios
+      .post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/${currentUser.id}/watchlist`,
+        {
+          movie: {
+            id: movie.id,
+            title: movie.title,
+            poster_path: movie.poster_path,
+            vote_average: movie.vote_average,
+            release_date: movie.release_date,
+          },
+        }
+      )
+      .then((response) => {
+        const updatedUser = response.data.user;
+
+        setCurrentUser(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la mise à jour de la watchlist :', error);
+      });
+  };
+
   return (
     <div className="movie-detail-container">
       <Link to="/" className="back-button">
@@ -83,6 +164,42 @@ function MovieDetail() {
             {movie.vote_average ? movie.vote_average.toFixed(1) : '?'}/10 (
             {movie.vote_count} votes)
           </p>
+          {currentUser && (
+            <div className="movie-detail-preference-buttons">
+              <button
+                type="button"
+                className={
+                  isLiked ? 'preference-button active' : 'preference-button'
+                }
+                onClick={() => handlePreference('like')}
+              >
+                👍 Like
+              </button>
+
+              <button
+                type="button"
+                className={
+                  isDisliked ? 'preference-button active' : 'preference-button'
+                }
+                onClick={() => handlePreference('dislike')}
+              >
+                👎 Dislike
+              </button>
+            </div>
+          )}
+          {currentUser && (
+            <button
+              type="button"
+              className={
+                isInWatchlist ? 'watchlist-button active' : 'watchlist-button'
+              }
+              onClick={handleWatchlist}
+            >
+              {isInWatchlist
+                ? '✓ Dans ma watchlist'
+                : '+ Ajouter à ma watchlist'}
+            </button>
+          )}
           <p>
             <strong>Durée :</strong>{' '}
             {movie.runtime ? `${movie.runtime} minutes` : 'Inconnue'}

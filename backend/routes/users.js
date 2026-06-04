@@ -29,6 +29,9 @@ router.post('/new', function (req, res) {
     firstname,
     lastname,
     password,
+    likedMovies: [],
+    dislikedMovies: [],
+    watchlist: [],
   });
 
   userRepository
@@ -42,6 +45,9 @@ router.post('/new', function (req, res) {
           firstname: savedUser.firstname,
           lastname: savedUser.lastname,
           password: savedUser.password,
+          likedMovies: savedUser.likedMovies || [],
+          dislikedMovies: savedUser.dislikedMovies || [],
+          watchlist: savedUser.watchlist || [],
         },
       });
     })
@@ -98,12 +104,159 @@ router.post('/login', function (req, res) {
           email: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
+          likedMovies: user.likedMovies || [],
+          dislikedMovies: user.dislikedMovies || [],
         },
       });
     })
     .catch(function (error) {
       console.error(error);
       res.status(500).json({ message: 'Error while logging in' });
+    });
+});
+
+router.post('/:userId/movie-preference', function (req, res) {
+  const userRepository = appDataSource.getRepository(User);
+
+  const { userId } = req.params;
+  const { movieId, preference } = req.body;
+
+  if (!movieId || !preference) {
+    return res.status(400).json({
+      message: 'movieId and preference are required',
+    });
+  }
+
+  if (preference !== 'like' && preference !== 'dislike') {
+    return res.status(400).json({
+      message: 'Preference must be like or dislike',
+    });
+  }
+
+  userRepository
+    .findOneBy({ id: Number(userId) })
+    .then(function (user) {
+      if (!user) {
+        return res.status(404).json({
+          message: 'User not found',
+        });
+      }
+
+      let likedMovies = user.likedMovies || [];
+      let dislikedMovies = user.dislikedMovies || [];
+
+      const numericMovieId = Number(movieId);
+
+      if (preference === 'like') {
+        likedMovies = [...new Set([...likedMovies, numericMovieId])];
+        dislikedMovies = dislikedMovies.filter((id) => id !== numericMovieId);
+      }
+
+      if (preference === 'dislike') {
+        dislikedMovies = [...new Set([...dislikedMovies, numericMovieId])];
+        likedMovies = likedMovies.filter((id) => id !== numericMovieId);
+      }
+
+      user.likedMovies = likedMovies;
+      user.dislikedMovies = dislikedMovies;
+
+      return userRepository.save(user);
+    })
+    .then(function (savedUser) {
+      if (!savedUser) {
+        return;
+      }
+
+      res.json({
+        message: 'Movie preference updated',
+        user: {
+          id: savedUser.id,
+          email: savedUser.email,
+          firstname: savedUser.firstname,
+          lastname: savedUser.lastname,
+          likedMovies: savedUser.likedMovies || [],
+          dislikedMovies: savedUser.dislikedMovies || [],
+          watchliste: savedUser.watchlist || [],
+        },
+      });
+    })
+    .catch(function (error) {
+      console.error(error);
+      res.status(500).json({
+        message: 'Error while updating movie preference',
+      });
+    });
+});
+
+router.post('/:userId/watchlist', function (req, res) {
+  const userRepository = appDataSource.getRepository(User);
+
+  const { userId } = req.params;
+  const { movie } = req.body;
+
+  if (!movie || !movie.id) {
+    return res.status(400).json({
+      message: 'Movie is required',
+    });
+  }
+
+  userRepository
+    .findOneBy({ id: Number(userId) })
+    .then(function (user) {
+      if (!user) {
+        return res.status(404).json({
+          message: 'User not found',
+        });
+      }
+
+      const watchlist = user.watchlist || [];
+
+      const movieAlreadyInWatchlist = watchlist.some(
+        (watchlistMovie) => Number(watchlistMovie.id) === Number(movie.id)
+      );
+
+      if (movieAlreadyInWatchlist) {
+        user.watchlist = watchlist.filter(
+          (watchlistMovie) => Number(watchlistMovie.id) !== Number(movie.id)
+        );
+      } else {
+        user.watchlist = [
+          ...watchlist,
+          {
+            id: movie.id,
+            title: movie.title,
+            poster_path: movie.poster_path,
+            vote_average: movie.vote_average,
+            release_date: movie.release_date,
+          },
+        ];
+      }
+
+      return userRepository.save(user);
+    })
+    .then(function (savedUser) {
+      if (!savedUser) {
+        return;
+      }
+
+      res.json({
+        message: 'Watchlist updated',
+        user: {
+          id: savedUser.id,
+          email: savedUser.email,
+          firstname: savedUser.firstname,
+          lastname: savedUser.lastname,
+          likedMovies: savedUser.likedMovies || [],
+          dislikedMovies: savedUser.dislikedMovies || [],
+          watchlist: savedUser.watchlist || [],
+        },
+      });
+    })
+    .catch(function (error) {
+      console.error(error);
+      res.status(500).json({
+        message: 'Error while updating watchlist',
+      });
     });
 });
 
