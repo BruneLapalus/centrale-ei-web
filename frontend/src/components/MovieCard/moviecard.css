@@ -1,0 +1,23 @@
+.movie-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.movie-card {
+  width: 180px;
+  cursor: pointer;
+}
+
+.movie-poster {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.movie-title {
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.movie-rating {
+  font-size: 14px;
+}
