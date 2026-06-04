@@ -1,13 +1,16 @@
-.Users-container {
+.user-space-page {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.user-space-tabs {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
 }
 
-.Users-container > :not(:last-child) {
-  margin-bottom: 20px;
-}
-
-.users-loading-error {
-  color: red;
+.active-tab {
+  font-weight: bold;
 }

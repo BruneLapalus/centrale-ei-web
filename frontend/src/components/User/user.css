@@ -1,0 +1,35 @@
+.user-form {
+  max-width: 400px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.user-form input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.user-form button,
+.user-dashboard button,
+.user-space-tabs button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.user-error {
+  color: red;
+}
+
+.user-dashboard {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.user-info {
+  margin: 20px 0;
+}

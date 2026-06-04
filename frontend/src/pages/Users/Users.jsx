@@ -1,20 +1,64 @@
+import { useState } from 'react';
+import LoginForm from '../../components/User/loginform';
+import RegisterForm from '../../components/User/registerform';
+import UserDashboard from '../../components/User/userdashboard';
 import './Users.css';
-import AddUserForm from '../../components/AddUserForm/AddUserForm';
-import UsersTable from '../../components/UsersTable/UsersTable';
-import { useFetchUsers } from './useFetchUsers';
 
 function Users() {
-  const { users, usersLoadingError, fetchUsers } = useFetchUsers();
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedUser = localStorage.getItem('currentUser');
+
+    if (savedUser) {
+      return JSON.parse(savedUser);
+    }
+
+    return null;
+  });
+
+  const [mode, setMode] = useState('login');
+
+  const handleLogin = (user) => {
+    setCurrentUser(user);
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem('currentUser');
+  };
+
+  if (currentUser) {
+    return <UserDashboard user={currentUser} onLogout={handleLogout} />;
+  }
 
   return (
-    <div className="Users-container">
-      <h1>This page displays the users</h1>
-      <AddUserForm onSuccessfulUserCreation={fetchUsers} />
-      <UsersTable users={users} onSuccessfulUserDeletion={fetchUsers} />
-      {usersLoadingError !== null && (
-        <div className="users-loading-error">{usersLoadingError}</div>
+    <main className="user-space-page">
+      <h1>Espace utilisateur</h1>
+
+      <div className="user-space-tabs">
+        <button
+          type="button"
+          onClick={() => setMode('login')}
+          className={mode === 'login' ? 'active-tab' : ''}
+        >
+          Se connecter
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setMode('register')}
+          className={mode === 'register' ? 'active-tab' : ''}
+        >
+          Créer un profil
+        </button>
+      </div>
+
+      {mode === 'login' ? (
+        <LoginForm onLogin={handleLogin} />
+      ) : (
+        <RegisterForm onRegister={handleLogin} />
       )}
-    </div>
+    </main>
   );
 }
 
