@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
 import './movieslist.css';
 import { Link } from 'react-router-dom';
-import MovieCard from '../MovieCard/MovieCard';
+import MovieCard from '../MovieCard/moviecard';
 
 function MoviesList({ movies, apiError }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedUser = localStorage.getItem('currentUser');
+
+    if (!savedUser) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(savedUser);
+    } catch (error) {
+      localStorage.removeItem('currentUser');
+
+      return null;
+    }
+  });
 
   if (apiError) {
     return null;
@@ -68,6 +84,19 @@ function MoviesList({ movies, apiError }) {
           ›
         </button>
       </div>
+      {currentUser &&
+        currentUser.watchlist &&
+        currentUser.watchlist.length > 0 && (
+          <section className="watchlist-section">
+            <h2>Ma watchlist</h2>
+
+            <div className="movies-list">
+              {currentUser.watchlist.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          </section>
+        )}
 
       <div className="movies-list">
         {movies.map((movie) => (

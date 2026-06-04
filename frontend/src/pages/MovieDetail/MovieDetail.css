@@ -54,3 +54,38 @@
   line-height: 1.6;
   margin-bottom: 20px;
 }
+
+.movie-detail-preference-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.preference-button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.preference-button.active {
+  font-weight: bold;
+  outline: 2px solid white;
+}
+
+.movie-detail-actions {
+  margin-top: 18px;
+}
+
+.watchlist-button {
+  margin-top: 12px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.watchlist-button.active {
+  font-weight: bold;
+  outline: 2px solid white;
+}

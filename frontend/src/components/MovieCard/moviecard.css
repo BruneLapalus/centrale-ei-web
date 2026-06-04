@@ -21,3 +21,21 @@
 .movie-rating {
   font-size: 14px;
 }
+
+.movie-preference-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.preference-button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.preference-button.active {
+  font-weight: bold;
+  outline: 2px solid white;
+}
