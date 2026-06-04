@@ -16,7 +16,7 @@ function App() {
         <Route path="/movie/:id" element={<MovieDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/counter" element={<Counter />} />
-        <Route path="/users" element={<Users />} />
+        <Route path="/users-space" element={<Users />} />
       </Routes>
     </Layout>
   );

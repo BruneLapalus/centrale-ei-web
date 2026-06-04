@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Header.css';
 // 1. Importe ton logo ici (adapte le chemin et le nom du fichier)
-import logo from '../../assets/logo.png'; 
+import logo from '../../assets/logo.png';
 
 const Header = () => {
   return (
@@ -17,10 +17,18 @@ const Header = () => {
 
       {/* Navigation */}
       <nav className="header-nav">
-        <Link className="header-link" to="/">Home</Link>
-        <Link className="header-link" to="/counter">Counter</Link>
-        <Link className="header-link" to="/users">Users</Link>
-        <Link className="header-link" to="/about">About</Link>
+        <Link className="header-link" to="/">
+          Home
+        </Link>
+        <Link className="header-link" to="/counter">
+          Counter
+        </Link>
+        <Link className="header-link" to="/users-space">
+          Espace Utilisateur
+        </Link>
+        <Link className="header-link" to="/about">
+          About
+        </Link>
       </nav>
     </header>
   );

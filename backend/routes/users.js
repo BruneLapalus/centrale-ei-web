@@ -15,10 +15,20 @@ router.get('/', function (req, res) {
 
 router.post('/new', function (req, res) {
   const userRepository = appDataSource.getRepository(User);
+
+  const { email, firstname, lastname, password } = req.body;
+
+  if (!email || !firstname || !lastname || !password) {
+    return res.status(400).json({
+      message: 'Email, firstname, lastname and password are required',
+    });
+  }
+
   const newUser = userRepository.create({
-    email: req.body.email,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
+    email,
+    firstname,
+    lastname,
+    password,
   });
 
   userRepository
@@ -26,18 +36,74 @@ router.post('/new', function (req, res) {
     .then(function (savedUser) {
       res.status(201).json({
         message: 'User successfully created',
-        id: savedUser.id,
+        user: {
+          id: savedUser.id,
+          email: savedUser.email,
+          firstname: savedUser.firstname,
+          lastname: savedUser.lastname,
+          password: savedUser.password,
+        },
       });
     })
     .catch(function (error) {
       console.error(error);
-      if (error.code === '23505') {
-        res.status(400).json({
+
+      if (
+        error.code === 'SQLITE_CONSTRAINT' ||
+        error.code === 'SQLITE_CONSTRAINT_UNIQUE' ||
+        error.code === '23505'
+      ) {
+        return res.status(400).json({
           message: `User with email "${newUser.email}" already exists`,
         });
-      } else {
-        res.status(500).json({ message: 'Error while creating the user' });
       }
+
+      res.status(500).json({
+        message: 'Error while creating the user',
+      });
+    });
+});
+
+//Fonction pour se log dans le site
+router.post('/login', function (req, res) {
+  const userRepository = appDataSource.getRepository(User);
+
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      message: 'Email and password are required',
+    });
+  }
+
+  userRepository
+    .findOneBy({ email })
+    .then(function (user) {
+      if (!user) {
+        return res.status(401).json({
+          message: 'Invalid email or password',
+        });
+      }
+
+      if (user.password !== password) {
+        return res.status(401).json({
+          message: 'Invalid email or password',
+        });
+      }
+
+      res.json({
+        message: 'User successfully logged in',
+        user: {
+          id: user.id,
+          email: user.email,
+          firstname: user.firstname,
+          lastname: user.lastname,
+        },
+      });
+    })
+    .catch(function (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error while logging in' });
     });
 });
 
