@@ -6,15 +6,7 @@
   display: flex;
   flex-direction: column;
 
-  /* --- AJOUT DE L'IMAGE DE FOND --- */
-  background-image: url('/mon_fond.png'); /* Chemin vers votre image dans le dossier public */
-  background-attachment: fixed; /* Rend le fond totalement IMMOBILE au scroll */
-  background-size: cover; /* L'image s'adapte pour couvrir tout l'écran */
-  background-position: center; /* Centre l'image horizontalement et verticalement */
-  background-repeat: no-repeat; /* Empêche l'image de se répéter en mosaïque */
-
-  /* Une couleur alternative de secours le temps que l'image charge */
-  background-color: #fcfaf6;
+  background-color: #ffffff;
 
   /* Une couleur de texte sombre par défaut */
   color: #1f2937;

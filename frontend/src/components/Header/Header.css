@@ -5,8 +5,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1e3a8a; /* Un beau bleu moderne (équivalent Bleu Tailwind) */
-  padding: 1rem 2rem;
+  background-color: #000000; /* Un beau bleu moderne (équivalent Bleu Tailwind) */
+  padding: 1rem;
   font-family: 'Inter', sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
