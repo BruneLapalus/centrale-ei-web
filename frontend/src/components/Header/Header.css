@@ -12,14 +12,13 @@
 }
 
 
-/* Conteneur des liens */
 .header-nav {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-/* Style des liens */
+
 .header-link {
   color: #ffffff;
   text-decoration: none;
@@ -30,19 +29,17 @@
   align-items: center;
 }
 
-/* Effet au survol des liens */
 .header-link:hover {
   opacity: 0.8;
 }
 
-/* Gestion des séparateurs "|" en CSS (sauf après le dernier élément) */
 .header-link:not(:last-child)::after {
   content: "|";
   margin-left: 1rem;
   color: rgba(255, 255, 255, 0.4); /* Blanc semi-transparent pour plus de subtilité */
   pointer-events: none; /* Évite que le "|" soit cliquable */
 }
-/* Modifie la règle existante .header-logo a pour l'alignement */
+
 .header-logo a {
   color: #ffffff;
   text-decoration: none;
@@ -50,15 +47,13 @@
   font-weight: 700;
   letter-spacing: -0.05em;
   
-  /* Ajoute ces lignes pour aligner le logo et le texte côte à côte */
   display: flex;
   align-items: center;
-  gap: 10px; /* Espace entre le logo et le texte */
+  gap: 10px;
 }
 
-/* Ajoute cette nouvelle règle pour contrôler la taille de ton logo */
 .logo-img {
-  height: 40px;      /* Ajuste la hauteur selon tes besoins */
-  width: auto;       /* Conserve les proportions de l'image */
+  height: 40px;     
+  width: auto;       
   object-fit: contain;
 }

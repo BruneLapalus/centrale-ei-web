@@ -30,9 +30,6 @@ function MoviesList({ movies, apiError, showList = true }) {
     return <p className="loading-text">Chargement des films...</p>;
   }
 
-  // --- LOGIQUE DU CARROUSEL POUR 3 AFFICHES ---
-
-  // Avance d'une relance (ou de 3 si vous préférez, ici configuré à 1 pour un défilement fluide)
   const nextMovie = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
   };
@@ -43,16 +40,13 @@ function MoviesList({ movies, apiError, showList = true }) {
     );
   };
 
-  // Fonction pour récupérer les 3 films à afficher (gère la boucle infinie si on arrive au bout)
   const getVisibleMovies = () => {
     const visibleMovies = [];
     for (let i = 0; i < 3; i++) {
       const index = (currentIndex + i) % movies.length;
-      // Sécurité si le tableau contient moins de 3 films au total
       if (movies[index] && !visibleMovies.includes(movies[index])) {
         visibleMovies.push(movies[index]);
       } else if (movies[index] && movies.length < 3) {
-        // Si vous avez moins de 3 films en tout, on évite les doublons visuels inutiles
         visibleMovies.push(movies[index]);
       }
     }

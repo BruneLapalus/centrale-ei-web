@@ -1,8 +1,7 @@
 .movies-section {
   width: 100%;
   max-width: 1100px;
-  margin: 0 auto; /* Centre la section sur la page */
-}
+  margin: 0 auto; 
 
 .section-title {
   color: rgb(0, 0, 0);
@@ -11,39 +10,35 @@
   text-align: center;
 }
 
-/* Le conteneur utilise flexbox pour aligner les boutons et les cartes */
 .carousel {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px; /* Espace entre les éléments du carrousel */
+  gap: 15px; 
   margin-bottom: 40px;
   width: 100%;
 }
 
-/* MODIFIÉ : Taille réduite pour afficher 3 cartes côte à côte */
 .carousel-card {
-  width: 280px; /* Plus petit pour en mettre 3 dans les 1100px max */
+  width: 280px; 
   background-color: #000000;
-  border-radius: 16px; /* Bords arrondis accentués */
-  padding: 15px; /* Un padding rectangulaire équilibré */
+  border-radius: 16px; 
+  padding: 15px; 
   text-align: center;
   box-sizing: border-box;
 }
 
-/* MODIFIÉ : Hauteur réduite pour s'adapter à la nouvelle largeur */
 .carousel-poster {
   width: 100%;
-  height: 380px; /* Fixer une hauteur donne un bel aspect rectangulaire */
-  object-fit: cover; /* "cover" évite les bandes noires si l'image est mal proportionnée */
-  border-radius: 10px; /* Bords de l'affiche légèrement arrondis */
+  height: 380px;
+  object-fit: cover; 
+  border-radius: 10px;
 }
 
 .carousel-title {
   color: rgb(255, 255, 255);
-  font-size: 20px; /* Légèrement réduit pour matcher la petite taille */
+  font-size: 20px; 
   margin: 12px 0 6px;
-  /* Optionnel : empêche le texte de casser le layout s'il est trop long */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -61,14 +56,12 @@
   font-size: 13px;
   line-height: 1.4;
   margin-top: 10px;
-  /* Optionnel : Limite la description à 3 lignes pour garder les cartes alignées */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;  
   overflow: hidden;
 }
 
-/* Boutons de navigation du carrousel */
 .carousel-button {
   background-color: #ffffff;
   color: rgb(0, 0, 0);
@@ -78,7 +71,7 @@
   height: 60px;
   border-radius: 8px;
   cursor: pointer;
-  flex-shrink: 0; /* Empêche le bouton de se déformer */
+  flex-shrink: 0; 
 }
 
 .carousel-button:hover {

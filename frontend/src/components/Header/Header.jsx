@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import './Header.css';
-// 1. Importe ton logo ici (adapte le chemin et le nom du fichier)
 import logo from '../../assets/logo.png';
 
 const Header = () => {
