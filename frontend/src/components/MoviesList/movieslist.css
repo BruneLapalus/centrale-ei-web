@@ -1,68 +1,99 @@
 .movies-section {
   width: 100%;
   max-width: 1100px;
+  margin: 0 auto; /* Centre la section sur la page */
 }
 
 .section-title {
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 32px;
   margin: 30px 0 20px;
   text-align: center;
 }
 
+/* Le conteneur utilise flexbox pour aligner les boutons et les cartes */
 .carousel {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 15px; /* Espace entre les éléments du carrousel */
   margin-bottom: 40px;
+  width: 100%;
 }
 
+/* MODIFIÉ : Taille réduite pour afficher 3 cartes côte à côte */
 .carousel-card {
-  width: 420px;
-  background-color: #1e3a8a;
-  border-radius: 12px;
-  padding: 20px;
+  width: 280px; /* Plus petit pour en mettre 3 dans les 1100px max */
+  background-color: #000000;
+  border-radius: 16px; /* Bords arrondis accentués */
+  padding: 15px; /* Un padding rectangulaire équilibré */
   text-align: center;
+  box-sizing: border-box;
 }
 
+/* MODIFIÉ : Hauteur réduite pour s'adapter à la nouvelle largeur */
 .carousel-poster {
   width: 100%;
-  max-height: 600px;
-  object-fit: contain;
-  border-radius: 8px;
+  height: 380px; /* Fixer une hauteur donne un bel aspect rectangulaire */
+  object-fit: cover; /* "cover" évite les bandes noires si l'image est mal proportionnée */
+  border-radius: 10px; /* Bords de l'affiche légèrement arrondis */
 }
 
 .carousel-title {
-  color: white;
-  font-size: 24px;
-  margin: 15px 0 8px;
+  color: rgb(255, 255, 255);
+  font-size: 20px; /* Légèrement réduit pour matcher la petite taille */
+  margin: 12px 0 6px;
+  /* Optionnel : empêche le texte de casser le layout s'il est trop long */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .carousel-rating,
 .carousel-date {
-  color: #d1d5db;
-  margin: 5px 0;
+  color: #ffffff7b;
+  font-size: 13px;
+  margin: 4px 0;
 }
 
 .carousel-description {
-  color: #e5e7eb;
-  font-size: 14px;
+  color: #ffffff;
+  font-size: 13px;
   line-height: 1.4;
-  margin-top: 12px;
+  margin-top: 10px;
+  /* Optionnel : Limite la description à 3 lignes pour garder les cartes alignées */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
 }
 
+/* Boutons de navigation du carrousel */
 .carousel-button {
-  background-color: #1e3a8a;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
   border: none;
-  font-size: 40px;
-  width: 50px;
-  height: 70px;
+  font-size: 30px;
+  width: 45px;
+  height: 60px;
   border-radius: 8px;
   cursor: pointer;
+  flex-shrink: 0; /* Empêche le bouton de se déformer */
 }
 
 .carousel-button:hover {
-  background-color: #2563eb;
+  background-color: #e0e0e0;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 15px; 
+  justify-content: center;
+  align-items: stretch; 
+}
+
+.movie-card-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
 }
