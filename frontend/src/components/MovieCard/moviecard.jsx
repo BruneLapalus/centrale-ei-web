@@ -45,6 +45,16 @@ function MovieCard({ movie }) {
 
         setCurrentUser(updatedUser);
         localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+        return axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/movies/recommend`,
+          {
+            tmdbId: movie.id,
+            title: movie.title,
+            rating: movie.vote_average,
+            isLiked: preference === 'like',
+          }
+        );
       })
       .catch((error) => {
         console.error('Erreur lors du like/dislike :', error);

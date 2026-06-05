@@ -53,12 +53,21 @@ function MovieDetail() {
 
         setCurrentUser(updatedUser);
         localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+        return axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/movies/recommend`,
+          {
+            tmdbId: movie.id,
+            title: movie.title,
+            rating: movie.vote_average,
+            isLiked: preference === 'like',
+          }
+        );
       })
       .catch((error) => {
         console.error('Erreur lors du like/dislike :', error);
       });
   };
-
   useEffect(() => {
     const TMDB_TOKEN =
       'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjlmNjAwMzY4MzMzODNkNGIwYjNhNzJiODA3MzdjNCIsInN1YiI6IjY0NzA5YmE4YzVhZGE1MDBkZWU2ZTMxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Em7Y9fSW94J91rbuKFjDWxmpWaQzTitxRKNdQ5Lh2Eo';
