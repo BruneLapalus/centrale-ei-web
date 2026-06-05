@@ -42,13 +42,48 @@ router.get('/search', function (req, res) {
     });
 });
 
-// 2. Récupérer les films tendances (API TMDB)
+// 2. Récupérer les films tendances, films par catégorie
 router.get('/trending', async (req, res, next) => {
   try {
     const data = await tmdbService.getPopularMovies(1);
     res.json(data.results);
   } catch (error) {
     next(error);
+  }
+});
+
+router.get('/category/:category', async function (req, res) {
+  const { category } = req.params;
+
+  try {
+    const pages = [1, 2, 3, 4, 5];
+
+    const responses = await Promise.all(
+      pages.map((page) => tmdbService.getMoviesByCategory(category, page))
+    );
+
+    const movies = responses.flatMap((response) => response.results);
+
+    const formattedMovies = movies.map((movie) => ({
+      id: movie.id,
+      title: movie.title || movie.name,
+      poster_path: movie.poster_path,
+      vote_average: movie.vote_average,
+      release_date: movie.release_date || movie.first_air_date,
+      overview: movie.overview,
+      media_type: category === 'series' ? 'tv' : 'movie',
+    }));
+
+    res.json({
+      category,
+      results: formattedMovies.slice(0, 100),
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: 'Error while fetching movies by category',
+    });
   }
 });
 
