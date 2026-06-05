@@ -17,7 +17,6 @@
   color: #1e3a8a; /* Passé en blanc */
   margin-bottom: 10px;
   
-  /* --- AJOUT DE L'OMBRE --- */
   text-shadow: 2px 2px 8px rgba(96, 106, 243, 0.8), 0 0 10px rgba(96, 106, 243, 0.8)
 
 .hero-subtitle {
@@ -25,7 +24,6 @@
   font-size: 3rem;
   color: #ffffff; /* Passé en blanc */
   
-  /* --- AJOUT DE L'OMBRE --- */
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9);
 }
 
@@ -46,7 +44,7 @@
 }
 
 .search-input:focus {
-  border-color: #1e3a8a; /* Passe au bleu du header quand on clique dessus */
+  border-color: #1e3a8a;
 }
 
 .search-indicator {
