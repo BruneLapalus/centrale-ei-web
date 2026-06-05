@@ -1,133 +1,140 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 import { useFetchMovies } from '../../components/CustomHook.jsx';
 import MoviesList from '../../components/MoviesList/movieslist';
+import MovieCard from '../../components/MovieCard/moviecard';
 import './Home.css';
 
-import MovieCard from '../../components/MovieCard/moviecard';
+const CATEGORIES = [
+  {
+    label: 'Cinéma',
+    value: 'cinema',
+  },
+  {
+    label: 'Séries',
+    value: 'series',
+  },
+  {
+    label: 'Comédie',
+    value: 'comedie',
+  },
+  {
+    label: 'Jeunesse',
+    value: 'jeunesse',
+  },
+  {
+    label: 'Thriller',
+    value: 'thriller',
+  },
+  {
+    label: 'Horreur',
+    value: 'horreur',
+  },
+  {
+    label: 'Romance',
+    value: 'romance',
+  },
+  {
+    label: 'Animation japonaise',
+    value: 'animation-japonaise',
+  },
+];
 
 function Home() {
-  const [movieName, setMovieName] = useState('');
   const { movies, apiError } = useFetchMovies();
 
-  const [currentUser] = useState(() => {
-    const savedUser = localStorage.getItem('currentUser');
+  const [selectedCategory, setSelectedCategory] = useState('cinema');
+  const [categoryMovies, setCategoryMovies] = useState([]);
+  const [moviesLoading, setMoviesLoading] = useState(false);
+  const [moviesError, setMoviesError] = useState(null);
 
-    if (!savedUser) {
-      return null;
-    }
-
-    try {
-      return JSON.parse(savedUser);
-    } catch (error) {
-      localStorage.removeItem('currentUser');
-
-      return null;
-    }
-  });
-
-  const [recommendations, setRecommendations] = useState([]);
-  const [recommendationMessage, setRecommendationMessage] = useState('');
-  const [recommendationError, setRecommendationError] = useState(null);
-  const [recommendationsLoading, setRecommendationsLoading] = useState(false);
-
-  const fetchRecommendations = () => {
-    if (!currentUser) {
-      return;
-    }
-
-    setRecommendationsLoading(true);
-    setRecommendationError(null);
+  const fetchMoviesByCategory = (category) => {
+    setMoviesLoading(true);
+    setMoviesError(null);
 
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/movies/recommendations`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/movies/category/${category}`)
       .then((response) => {
-        setRecommendationMessage(response.data.message || '');
-        setRecommendations(response.data.results || []);
+        setCategoryMovies(response.data.results || []);
       })
       .catch((error) => {
-        console.error('Erreur recommandations :', error);
-        setRecommendationError('Impossible de charger les recommandations.');
+        console.error(error);
+        setMoviesError('Impossible de charger cette catégorie.');
       })
       .finally(() => {
-        setRecommendationsLoading(false);
+        setMoviesLoading(false);
       });
   };
 
   useEffect(() => {
-    fetchRecommendations();
-  }, []);
+    fetchMoviesByCategory(selectedCategory);
+  }, [selectedCategory]);
 
-  // Filtrage des films
-  const filteredMovies = movies
-    ? movies.filter((movie) =>
-        movie.title.toLowerCase().includes(movieName.toLowerCase())
-      )
-    : [];
+  const selectedCategoryLabel =
+    CATEGORIES.find((category) => category.value === selectedCategory)?.label ||
+    'Films';
 
   return (
-    <div className="App">
-      {/* 1. Notre composant épuré à qui on passe l'état de recherche */}
+    <main className="home-page">
+      <section className="home-hero">
+        <h1>Pop Corn Time</h1>
+        <p>Découvrez des films et séries selon vos envies.</p>
 
-      <main
-        className="App-content"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '0 20px',
-        }}
-      >
-        {/* 2. Message d'erreur API */}
-        {apiError && (
-          <div className="api-error-message">
-            <strong>Attention :</strong> Impossible de charger les films (
-            {apiError})
-          </div>
-        )}
         <Link to="/search" className="home-search-button">
           Rechercher un film
         </Link>
-        {currentUser && (
-          <section className="recommendations-section">
-            <h2>Recommandations pour vous</h2>
+      </section>
 
-            {recommendationsLoading && <p>Chargement des recommandations...</p>}
+      <section className="home-carousel-section">
+        <MoviesList movies={movies} apiError={apiError} showList={false} />
+      </section>
 
-            {recommendationError && (
-              <p className="api-error-message">{recommendationError}</p>
-            )}
+      <section className="category-filter-section">
+        <h2>Catégories</h2>
 
-            {recommendationMessage && (
-              <p className="recommendation-message">{recommendationMessage}</p>
-            )}
-
-            {recommendations.length > 0 ? (
-              <div className="recommendations-list">
-                {recommendations.map((movie) => (
-                  <MovieCard key={movie.id} movie={movie} />
-                ))}
-              </div>
-            ) : (
-              !recommendationsLoading && (
-                <p>Aucune recommandation disponible pour le moment.</p>
-              )
-            )}
-
+        <div className="category-buttons">
+          {CATEGORIES.map((category) => (
             <button
+              key={category.value}
               type="button"
-              className="refresh-recommendations-button"
-              onClick={fetchRecommendations}
+              className={
+                selectedCategory === category.value
+                  ? 'category-button active'
+                  : 'category-button'
+              }
+              onClick={() => setSelectedCategory(category.value)}
             >
-              Actualiser les recommandations
+              {category.label}
             </button>
-          </section>
+          ))}
+        </div>
+      </section>
+
+      <section className="category-results-section">
+        <h2>{selectedCategoryLabel}</h2>
+
+        {moviesLoading && <p>Chargement...</p>}
+
+        {moviesError && <p className="home-error">{moviesError}</p>}
+
+        {!moviesLoading && !moviesError && categoryMovies.length === 0 && (
+          <p>Aucun résultat trouvé.</p>
         )}
-        {/* 3. Liste des films */}
-        <MoviesList movies={filteredMovies} apiError={apiError} />
-      </main>
-    </div>
+
+        {!moviesLoading && !moviesError && categoryMovies.length > 0 && (
+          <div className="category-movies-list">
+            {categoryMovies.map((movie) => (
+              <MovieCard
+                key={`${movie.media_type}-${movie.id}`}
+                movie={movie}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    </main>
   );
 }
 

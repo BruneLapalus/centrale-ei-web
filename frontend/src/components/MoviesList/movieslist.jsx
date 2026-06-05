@@ -3,7 +3,7 @@ import './movieslist.css';
 import { Link } from 'react-router-dom';
 import MovieCard from '../MovieCard/moviecard';
 
-function MoviesList({ movies, apiError }) {
+function MoviesList({ movies, apiError, showList = true }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [currentUser, setCurrentUser] = useState(() => {
@@ -97,12 +97,13 @@ function MoviesList({ movies, apiError }) {
             </div>
           </section>
         )}
-
-      <div className="movies-list">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </div>
+      {showList && (
+        <div className="movies-list">
+          {movies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -33,14 +33,12 @@ async function fetchFromTMDB(endpoint, queryParams = '') {
   }
 }
 
-// Ici, on exporte les fonctions spécifiques dont ton application aura besoin
+// On exporte les fonctions de TMDB
 export const tmdbService = {
-  // Récupérer les films populaires
   getPopularMovies: async (page = 1) => {
     return await fetchFromTMDB('/movie/popular', `&page=${page}`);
   },
 
-  // Rechercher un film par texte (ex: "Inception")
   searchMovies: async (query, page = 1) => {
     return await fetchFromTMDB(
       '/search/movie',
@@ -48,16 +46,63 @@ export const tmdbService = {
     );
   },
 
-  // Récupérer les détails d'un film spécifique grâce à son ID TMDB
   getMovieDetails: async (tmdbId) => {
     return await fetchFromTMDB(`/movie/${tmdbId}`);
   },
 
-  // AJOUT : Récupérer les recommandations basées sur un film spécifique
   getRecommendations: async (tmdbId, page = 1) => {
     return await fetchFromTMDB(
       `/movie/${tmdbId}/recommendations`,
       `&page=${page}`
     );
+  },
+
+  getMoviesByCategory: async (category, page = 1) => {
+    switch (category) {
+      case 'cinema':
+        return await fetchFromTMDB('/movie/popular', `&page=${page}`);
+
+      case 'series':
+        return await fetchFromTMDB('/tv/popular', `&page=${page}`);
+
+      case 'comedie':
+        return await fetchFromTMDB(
+          '/discover/movie',
+          `&page=${page}&with_genres=35`
+        );
+
+      case 'jeunesse':
+        return await fetchFromTMDB(
+          '/discover/movie',
+          `&page=${page}&with_genres=10751`
+        );
+
+      case 'thriller':
+        return await fetchFromTMDB(
+          '/discover/movie',
+          `&page=${page}&with_genres=53`
+        );
+
+      case 'horreur':
+        return await fetchFromTMDB(
+          '/discover/movie',
+          `&page=${page}&with_genres=27`
+        );
+
+      case 'romance':
+        return await fetchFromTMDB(
+          '/discover/movie',
+          `&page=${page}&with_genres=10749`
+        );
+
+      case 'animation-japonaise':
+        return await fetchFromTMDB(
+          '/discover/movie',
+          `&page=${page}&with_genres=16&with_origin_country=JP&with_original_language=ja`
+        );
+
+      default:
+        return await fetchFromTMDB('/movie/popular', `&page=${page}`);
+    }
   },
 };
