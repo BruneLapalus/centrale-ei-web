@@ -3,6 +3,17 @@ import './Header.css';
 import logo from '../../assets/logo.png';
 
 const Header = () => {
+  const savedUser = localStorage.getItem('currentUser');
+  let currentUser = null;
+
+  if (savedUser) {
+    try {
+      currentUser = JSON.parse(savedUser);
+    } catch (error) {
+      localStorage.removeItem('currentUser');
+    }
+  }
+
   return (
     <header className="header-container">
       {/* Logo / Nom du site */}
@@ -16,8 +27,13 @@ const Header = () => {
 
       {/* Navigation */}
       <nav className="header-nav">
+        {currentUser?.isDeveloper && (
+          <Link className="header-link" to="/admin">
+            Administrateur
+          </Link>
+        )}
         <Link className="header-link" to="/">
-          Home
+          Accueil
         </Link>
         <Link className="header-link" to="/search">
           Recherche
@@ -26,7 +42,7 @@ const Header = () => {
           Espace Utilisateur
         </Link>
         <Link className="header-link" to="/about">
-          About
+          Qui sommmes-nous?
         </Link>
       </nav>
     </header>

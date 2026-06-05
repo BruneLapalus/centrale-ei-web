@@ -5,7 +5,7 @@ import { tmdbService } from '../services/tmdbService.js';
 
 const router = express.Router();
 
-// 1. Récupérer les films de ta base de données locale
+// Récupération films base locale
 router.get('/', function (req, res) {
   appDataSource
     .getRepository(Movie)
@@ -42,7 +42,7 @@ router.get('/search', function (req, res) {
     });
 });
 
-// 2. Récupérer les films tendances, films par catégorie
+// Récupération des films tendances, et par catégo
 router.get('/trending', async (req, res, next) => {
   try {
     const data = await tmdbService.getPopularMovies(1);
@@ -87,7 +87,7 @@ router.get('/category/:category', async function (req, res) {
   }
 });
 
-// 3. Créer un film manuellement en local (en acceptant le tmdbId)
+// Création film en local
 router.post('/new', function (req, res) {
   const moviesRepository = appDataSource.getRepository(Movie);
   const newMovie = moviesRepository.create({
@@ -116,7 +116,7 @@ router.post('/new', function (req, res) {
     });
 });
 
-// 4. MISE À JOUR : Enregistrer une recommandation avec Like ou Dislike
+// Enregistrement like ou dislike
 router.post('/recommend', async (req, res, next) => {
   try {
     const { tmdbId, title, rating, isLiked } = req.body;
@@ -150,7 +150,7 @@ router.post('/recommend', async (req, res, next) => {
         isNew: false,
       });
     } else {
-      // S'il n'existe pas, on le crée avec son statut Like / Dislike
+      // S'il n'existe pas, on le crée avec statut like/dislike
       const newMovie = moviesRepository.create({
         tmdbId: Number(tmdbId),
         title: title,
@@ -172,7 +172,7 @@ router.post('/recommend', async (req, res, next) => {
   }
 });
 
-// 5. Supprimer un film local par son ID
+// Supprime un film local par son ID
 router.delete('/:movieId', function (req, res) {
   appDataSource
     .getRepository(Movie)
@@ -186,24 +186,24 @@ router.delete('/:movieId', function (req, res) {
     });
 });
 
-// 6. NOUVEAUTÉ : L'Algorithme intelligent basé sur les Likes et les Dislikes
+// Algo intelligent basé sur les like et dislike
 router.get('/recommendations', async (req, res, next) => {
   try {
     const moviesRepository = appDataSource.getRepository(Movie);
 
-    // A. Récupérer le dernier film AIMÉ (isLiked = true)
+    // Récupère le dernier film like
     const lastLiked = await moviesRepository.findOne({
       where: { isLiked: true },
       order: { id: 'DESC' },
     });
 
-    // B. Récupérer le dernier film DÉTESTÉ (isLiked = false)
+    // Récupère le dernier film dislike
     const lastDisliked = await moviesRepository.findOne({
       where: { isLiked: false },
       order: { id: 'DESC' },
     });
 
-    // Sécurité : Si aucun film n'est aimé en BDD, on donne les tendances mondiales
+    // Si aucun film n'est aimé en BDD, on donne les tendances mondiales
     if (!lastLiked || !lastLiked.tmdbId) {
       const trending = await tmdbService.getPopularMovies(1);
 
@@ -215,14 +215,14 @@ router.get('/recommendations', async (req, res, next) => {
       });
     }
 
-    // C. Récupérer les recommandations positives auprès de TMDB
+    // Récupération des recommandations positives auprès de TMDB
     console.log(
       `[ALGO] Génération des suggestions basées sur le LIKE : ${lastLiked.title}`
     );
     const likedData = await tmdbService.getRecommendations(lastLiked.tmdbId);
     let finalResults = likedData.results;
 
-    // D. Si l'utilisateur a déjà disliké un film, on applique le filtre de censure !
+    // Si l'utilisateur a déjà disliké un film, on applique le filtre censure
     if (lastDisliked && lastDisliked.tmdbId) {
       console.log(
         `[ALGO] Filtrage actif. On supprime le contenu similaire au DISLIKE : ${lastDisliked.title}`
@@ -240,7 +240,7 @@ router.get('/recommendations', async (req, res, next) => {
       );
     }
 
-    // E. On renvoie le résultat épuré
+    // Renvoie le résultat épuré
     res.json({
       message:
         `Recommandations basées sur votre intérêt pour "${lastLiked.title}"` +
