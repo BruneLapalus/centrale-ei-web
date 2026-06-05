@@ -61,3 +61,87 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+.category-movies-list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.category-filter-section {
+  width: 100%;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.category-filter-section h2 {
+  margin-bottom: 18px;
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.category-button {
+  padding: 12px 20px;
+  border: 2px solid black;
+  border-radius: 999px;
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.category-button:hover {
+  background-color: white;
+  color: black;
+  transform: translateY(-2px);
+}
+
+.category-button.active {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+}
+
+.home-search-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-top: 18px;
+  padding: 12px 22px;
+
+  border: 2px solid black;
+  border-radius: 999px;
+
+  background-color: black;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.home-search-button:hover {
+  background-color: white;
+  color: black;
+  transform: translateY(-2px);
+}
+
+.search-icon {
+  font-size: 16px;
+  line-height: 1;
+}

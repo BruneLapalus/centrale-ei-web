@@ -4,6 +4,14 @@ import User from '../entities/user.js';
 
 const router = express.Router();
 
+const isDeveloperEmail = (email) => {
+  const developerEmails = (process.env.DEVELOPER_EMAILS || '')
+    .split(',')
+    .map((developerEmail) => developerEmail.trim().toLowerCase());
+
+  return developerEmails.includes(email.toLowerCase());
+};
+
 router.get('/', function (req, res) {
   appDataSource
     .getRepository(User)
@@ -32,6 +40,7 @@ router.post('/new', function (req, res) {
     likedMovies: [],
     dislikedMovies: [],
     watchlist: [],
+    isDeveloper: isDeveloperEmail(email),
   });
 
   userRepository
@@ -48,6 +57,7 @@ router.post('/new', function (req, res) {
           likedMovies: savedUser.likedMovies || [],
           dislikedMovies: savedUser.dislikedMovies || [],
           watchlist: savedUser.watchlist || [],
+          isDeveloper: savedUser.isDeveloper,
         },
       });
     })

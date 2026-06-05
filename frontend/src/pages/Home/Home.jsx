@@ -130,7 +130,8 @@ function Home() {
         <p>Découvrez des films et séries selon vos envies.</p>
 
         <Link to="/search" className="home-search-button">
-          Rechercher un film
+          <span className="search-icon">🔍</span>
+          <span>Rechercher un film</span>
         </Link>
       </section>
       {currentUser && (
