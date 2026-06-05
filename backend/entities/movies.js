@@ -9,7 +9,6 @@ const Movie = new typeorm.EntitySchema({
       generated: true,
     },
     tmdbId: {
-      // <-- Corrigé ici (fini le "tmormId")
       type: Number,
       unique: true,
       nullable: true,
