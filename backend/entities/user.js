@@ -27,6 +27,10 @@ const User = new typeorm.EntitySchema({
       type: 'simple-json',
       nullable: true,
     },
+    role: {
+      type: String,
+      default: 'user',
+    },
   },
 });
 

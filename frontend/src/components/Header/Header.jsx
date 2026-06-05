@@ -18,7 +18,7 @@ const Header = () => {
       {/* Navigation */}
       <nav className="header-nav">
         <Link className="header-link" to="/">
-          Home
+          Accueil
         </Link>
         <Link className="header-link" to="/search">
           Recherche
@@ -27,7 +27,7 @@ const Header = () => {
           Espace Utilisateur
         </Link>
         <Link className="header-link" to="/about">
-          About
+          L'équipe
         </Link>
       </nav>
     </header>

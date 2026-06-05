@@ -34,7 +34,7 @@ function MoviesList({ movies, apiError, showList = true }) {
 
   // Avance d'une relance (ou de 3 si vous préférez, ici configuré à 1 pour un défilement fluide)
   const nextMovie = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 3) % movies.length);
   };
 
   const previousMovie = () => {
@@ -105,18 +105,6 @@ function MoviesList({ movies, apiError, showList = true }) {
         </button>
       </div>
 
-      {currentUser &&
-        currentUser.watchlist &&
-        currentUser.watchlist.length > 0 && (
-          <section className="watchlist-section">
-            <h2>Ma watchlist</h2>
-            <div className="movies-list">
-              {currentUser.watchlist.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
-          </section>
-        )}
       {showList && (
         <div className="movies-list">
           {movies.map((movie) => (
