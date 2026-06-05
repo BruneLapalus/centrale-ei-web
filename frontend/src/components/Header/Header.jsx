@@ -20,8 +20,8 @@ const Header = () => {
         <Link className="header-link" to="/">
           Home
         </Link>
-        <Link className="header-link" to="/counter">
-          Counter
+        <Link className="header-link" to="/search">
+          Recherche
         </Link>
         <Link className="header-link" to="/users-space">
           Espace Utilisateur
