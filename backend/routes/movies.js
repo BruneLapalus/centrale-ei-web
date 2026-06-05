@@ -19,6 +19,29 @@ router.get('/', function (req, res) {
     });
 });
 
+// Fonction recherche
+router.get('/search', function (req, res) {
+  const query = req.query.query;
+
+  if (!query) {
+    return res.status(400).json({
+      message: 'Query is required',
+    });
+  }
+
+  tmdbService
+    .searchMovies(query, 1)
+    .then(function (data) {
+      res.json(data.results);
+    })
+    .catch(function (error) {
+      console.error(error);
+      res.status(500).json({
+        message: 'Error while searching movies',
+      });
+    });
+});
+
 // 2. Récupérer les films tendances (API TMDB)
 router.get('/trending', async (req, res, next) => {
   try {

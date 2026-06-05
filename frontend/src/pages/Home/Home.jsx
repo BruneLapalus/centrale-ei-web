@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useFetchMovies } from '../../components/CustomHook.jsx';
 import MoviesList from '../../components/MoviesList/movieslist';
-import HeroSearch from '../../components/HeroSearch/HeroSearch'; // On importe notre nouveau composant
 import './Home.css';
 
 function Home() {
@@ -18,7 +18,6 @@ function Home() {
   return (
     <div className="App">
       {/* 1. Notre composant épuré à qui on passe l'état de recherche */}
-      <HeroSearch movieName={movieName} setMovieName={setMovieName} />
 
       <main
         className="App-content"
@@ -36,6 +35,9 @@ function Home() {
             {apiError})
           </div>
         )}
+        <Link to="/search" className="home-search-button">
+          Rechercher un film
+        </Link>
         {/* 3. Liste des films */}
         <MoviesList movies={filteredMovies} apiError={apiError} />
       </main>

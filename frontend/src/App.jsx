@@ -7,6 +7,7 @@ import MovieDetail from './pages/MovieDetail/MovieDetail';
 import About from './pages/About/About';
 import Counter from './pages/Counter/Counter';
 import Users from './pages/Users/Users';
+import Search from './pages/Search/search';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/counter" element={<Counter />} />
         <Route path="/users-space" element={<Users />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </Layout>
   );
