@@ -1,3 +1,64 @@
-.about {
+.about-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+h1 {
   text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+}
+
+.about-section {
+  margin-bottom: 50px;
+  padding: 25px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.js-section h2 {
+  color: #030303; /* Couleur jaune emblématique de JavaScript */
+}
+
+.css-section h2 {
+  color: #0277bd; /* Couleur bleue emblématique de CSS */
+}
+
+.story-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Style de la galerie photo */
+.photo-gallery {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 30px;
+  flex-wrap: wrap; /* S'adapte sur mobile */
+}
+
+.photo-card {
+  flex: 1;
+  min-width: 250px;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.photo-card:hover {
+  transform: scale(1.03); /* Petit effet sympa au survol */
+}
+
+.photo-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* Évite de déformer les images */
+  display: block;
 }
