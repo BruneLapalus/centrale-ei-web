@@ -214,7 +214,7 @@ router.get('/recommendations', async (req, res, next) => {
           : ''),
       basedOnLiked: lastLiked,
       excludedBasedOn: lastDisliked || null,
-      results: finalResults,
+      results: finalResults.slice(0, 10),
     });
   } catch (error) {
     console.error('Erreur algo de recommandation :', error);
