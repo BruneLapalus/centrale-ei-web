@@ -1,9 +1,7 @@
-/* Classe principale pour aligner le contenu restant si besoin */
 .App {
   text-align: center;
 }
 
-/* Message d'erreur API qui se trouve dans Home.jsx */
 .api-error-message {
   color: #b91c1c;
   background-color: transparent;

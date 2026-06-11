@@ -8,12 +8,10 @@
 
   background-color: #ffffff;
 
-  /* Une couleur de texte sombre par défaut */
   color: #1f2937;
   font-family: 'Inter', sans-serif;
 }
 .Layout-content {
-  /* Supprime ou ajuste le padding selon tes préférences pour le contenu */
   padding: 40px 20px;
-  flex: 1; /* Permet au contenu de prendre tout l'espace restant */
+  flex: 1;
 }
